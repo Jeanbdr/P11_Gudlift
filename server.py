@@ -52,16 +52,16 @@ def purchasePlaces():
     if placesRequired <= int(club["points"]):
         if placesRequired > 12:
             flash("You're not allow to get more than 12 places")
-            return render_template('welcome.html', club=club, competitions=competitions)
+            return render_template('welcome.html', club=club, competitions=competitions, date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         elif placesRequired < 0:
             flash("You can't put a negative value")
-            return render_template('welcome.html', club=club, competitions=competitions)
+            return render_template('welcome.html', club=club, competitions=competitions, date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
         flash('Great-booking complete!')
         return render_template('welcome.html', club=club, competitions=competitions, date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     else:
         flash("You can't get more places than your number of available points")
-        return render_template('welcome.html', club=club, competitions=competitions)
+        return render_template('welcome.html', club=club, competitions=competitions, date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
 
 # TODO: Add route for points display
