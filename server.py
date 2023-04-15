@@ -1,6 +1,6 @@
 import json
 from flask import Flask,render_template,request,redirect,flash,url_for
-
+from datetime import datetime
 
 def loadClubs():
     with open('clubs.json') as c:
@@ -30,7 +30,7 @@ def showSummary():
         club = [club for club in clubs if club['email'] == request.form['email']][0]
     except IndexError:
         return render_template('index.html', message= "Sorry the email wasn't found")
-    return render_template('welcome.html',club=club,competitions=competitions)
+    return render_template('welcome.html',club=club,competitions=competitions, date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
 
 @app.route('/book/<competition>/<club>')
@@ -41,7 +41,7 @@ def book(competition,club):
         return render_template('booking.html',club=foundClub,competition=foundCompetition)
     else:
         flash("Something went wrong-please try again")
-        return render_template('welcome.html', club=club, competitions=competitions)
+        return render_template('welcome.html', club=club, competitions=competitions, date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
 
 @app.route('/purchasePlaces',methods=['POST'])
@@ -58,7 +58,7 @@ def purchasePlaces():
             return render_template('welcome.html', club=club, competitions=competitions)
         competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
         flash('Great-booking complete!')
-        return render_template('welcome.html', club=club, competitions=competitions)
+        return render_template('welcome.html', club=club, competitions=competitions, date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     else:
         flash("You can't get more places than your number of available points")
         return render_template('welcome.html', club=club, competitions=competitions)
