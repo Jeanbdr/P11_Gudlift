@@ -57,6 +57,7 @@ def purchasePlaces():
             flash("You can't put a negative value")
             return render_template('welcome.html', club=club, competitions=competitions, date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
+        club["points"] = int(club["points"]) - placesRequired
         flash('Great-booking complete!')
         return render_template('welcome.html', club=club, competitions=competitions, date=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     else:
